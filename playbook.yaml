@@ -1,0 +1,26 @@
+---
+- name: Install nginx
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Add epel-release repo and nginx
+    ansible.builtin.yum:
+      name: 
+      - epel-release
+      - nginx
+      state: present
+
+  - name: Start NGiNX
+    ansible.builtin.service:
+      name: nginx
+      state: started
+
+  - name: Enable firewalld
+    service: name=firewalld state=started enabled=yes
+
+  - name: Allow http
+    command: firewall-cmd --zone=public --permanent --add-service=http
+  
+  - name: Bounce firewalld
+    service: name=firewalld state=restarted
