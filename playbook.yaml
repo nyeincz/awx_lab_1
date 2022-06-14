@@ -5,14 +5,14 @@
 
   tasks:
   - name: Add epel-release repo and nginx
-    ansible.builtin.yum:
+      yum:
       name: 
       - epel-release
       - nginx
       state: present
 
   - name: Start NGiNX
-    ansible.builtin.service:
+    service:
       name: nginx
       state: started
 
